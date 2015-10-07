@@ -1,0 +1,58 @@
+{
+	"uuid": "93855bd7-db67-4ae3-ab85-0f63d498ca4a",
+	"shortName": "pebble-mpc",
+	"longName": "pebble-mpc",
+	"companyName": "Jingbei Li",
+	"versionLabel": "1.0",
+	"sdkVersion": "3",
+	"targetPlatforms": ["basalt"],
+	"watchapp": {
+		"watchface": false
+	},
+	"appKeys": {
+		"dummy": 0
+	},
+	"resources": {
+		"media": [{
+			"type": "png",
+			"name": "PAUSE",
+			"file": "pause.png"
+		}, {
+			"type": "png",
+			"name": "PLAY",
+			"file": "play.png"
+		}, {
+			"type": "png",
+			"name": "PREVIOUS",
+			"file": "previous.png"
+		}, {
+			"type": "png",
+			"name": "NEXT",
+			"file": "next.png"
+		}, {
+			"type": "png",
+			"name": "VOLUME_INCREASE",
+			"file": "volume_increase.png"
+		}, {
+			"type": "png",
+			"name": "VOLUME_DECREASE",
+			"file": "volume_decrease.png"
+		}, {
+			"type": "png",
+			"name": "VOLUME_INCREASING",
+			"file": "volume_increasing.png"
+		}, {
+			"type": "png",
+			"name": "VOLUME_DECREASING",
+			"file": "volume_decreasing.png"
+		}, {
+			"type": "png",
+			"name": "PLAYING",
+			"file": "playing.png"
+		}, {
+			"type": "png",
+			"name": "PAUSED",
+			"file": "paused.png"
+		}]
+	}
+}
