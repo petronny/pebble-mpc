@@ -6,3 +6,6 @@ build
 .lock-waf*
 
 screenshots
+
+.ycm_extra_conf*
+*.swp

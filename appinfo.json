@@ -10,7 +10,12 @@
 		"watchface": false
 	},
 	"appKeys": {
-		"dummy": 0
+		"KEY_STATUS": 0,
+		"KEY_TTILE": 1,
+		"KEY_AUTHOR": 2,
+		"KEY_CURRENT": 3,
+		"KEY_DURATION": 4,
+		"KEY_VOLUME": 5
 	},
 	"resources": {
 		"media": [{
@@ -53,6 +58,10 @@
 			"type": "png",
 			"name": "PAUSED",
 			"file": "paused.png"
+		}, {
+			"type": "png",
+			"name": "CONNACTION_FAILED",
+			"file": "connection_failed.png"
 		}]
 	}
 }

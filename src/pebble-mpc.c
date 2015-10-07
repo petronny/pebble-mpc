@@ -3,8 +3,12 @@
 
 enum
 {
-	KEY_TEMPERATURE = 0,
-	KEY_CONDITIONS = 1
+	KEY_STATUS = 0,
+	KEY_TTILE = 1,
+	KEY_AUTHOR = 2,
+	KEY_CURRENT = 3,
+	KEY_DURATION = 4,
+	KEY_VOLUME = 5
 };
 
 static Window * window;
@@ -33,6 +37,7 @@ static char title[100];
 static char author[100];
 static char current_buffer[10];
 static char duration_buffer[10];
+static uint8_t volume;
 static uint16_t current, duration;
 
 static void convert_time ( char * buffer, uint16_t time )
@@ -44,12 +49,12 @@ static void convert_time ( char * buffer, uint16_t time )
 		{
 			uint8_t hours = minutes / 60;
 			minutes = minutes / 60;
-			snprintf ( buffer, 10, "%d:%02d:%02d", hours, minutes, seconds );
+			snprintf ( buffer, 10, "%u:%02u:%02u", hours, minutes, seconds );
 		}
 
 	else
 		{
-			snprintf ( buffer, 10, "%d:%02d", minutes, seconds );
+			snprintf ( buffer, 10, "%u:%02u", minutes, seconds );
 		}
 }
 
@@ -86,6 +91,16 @@ static void select_click_handler ( ClickRecognizerRef recognizer, void * context
 
 static void up_click_handler ( ClickRecognizerRef recognizer, void * context )
 {
+	// Begin dictionary
+	DictionaryIterator * iter;
+	app_message_outbox_begin ( &iter );
+
+	// Add a key-value pair
+	dict_write_uint8 ( iter, 0, 1 );
+
+	// Send the message!
+	app_message_outbox_send();
+
 	/*text_layer_set_text ( author_text_layer, "Previous" );*/
 }
 
@@ -104,6 +119,16 @@ static void up_long_click_release_handler ( ClickRecognizerRef recognizer, void 
 
 static void down_click_handler ( ClickRecognizerRef recognizer, void * context )
 {
+	// Begin dictionary
+	DictionaryIterator * iter;
+	app_message_outbox_begin ( &iter );
+
+	// Add a key-value pair
+	dict_write_uint8 ( iter, 0, 0 );
+
+	// Send the message!
+	app_message_outbox_send();
+
 	/*text_layer_set_text ( author_text_layer, "Next" );*/
 }
 
@@ -132,22 +157,81 @@ static void click_config_provider ( void * context )
 
 static void inbox_received_callback ( DictionaryIterator * iterator, void * context )
 {
-	text_layer_set_text ( author_text_layer, "Received" );
+	/*
+	// Read first item
+	Tuple * t = dict_read_first ( iterator );
+
+	// For all items
+	while ( t != NULL )
+		{
+			// Which key was received?
+			switch ( t->key )
+				{
+					case KEY_STATUS:
+						switch ( KEY_STATUS )
+							{
+								case 0:
+									play_or_pause = false;
+									break;
+
+								case 1:
+									play_or_pause = true;
+									break;
+
+								case 2:
+									t = NULL;
+									break;
+
+							}
+
+						break;
+
+					case KEY_TTILE:
+						snprintf ( title, sizeof ( title ), "%s", t->value->cstring );
+						break;
+
+					case KEY_AUTHOR:
+						snprintf ( author, sizeof ( author ), "%s", t->value->cstring );
+						break;
+
+					case KEY_CURRENT:
+						current = t->value->uint16;
+						break;
+
+					case KEY_DURATION:
+						duration = t->value->uint16;
+						break;
+
+					case KEY_VOLUME:
+						volume = t->value->uint8;
+						break;
+
+					default:
+						APP_LOG ( APP_LOG_LEVEL_ERROR, "Key %d not recognized!", ( int ) t->key );
+						break;
+				}
+
+			// Look for next item
+			t = dict_read_next ( iterator );
+		}
+
+	update_status();
+	*/
 }
 
 static void inbox_dropped_callback ( AppMessageResult reason, void * context )
 {
-	APP_LOG ( APP_LOG_LEVEL_ERROR, "Message dropped!" );
+	text_layer_set_text ( author_text_layer, "Dropped!" );
 }
 
 static void outbox_failed_callback ( DictionaryIterator * iterator, AppMessageResult reason, void * context )
 {
-	APP_LOG ( APP_LOG_LEVEL_ERROR, "Outbox send failed!" );
+	text_layer_set_text ( author_text_layer, "Send Failed!" );
 }
 
 static void outbox_sent_callback ( DictionaryIterator * iterator, void * context )
 {
-	APP_LOG ( APP_LOG_LEVEL_INFO, "Outbox send success!" );
+	/*APP_LOG ( APP_LOG_LEVEL_INFO, "Outbox send success!" );*/
 }
 
 static void get_status()
@@ -161,8 +245,9 @@ static void get_status()
 
 static void tick_handler ( struct tm * tick_time, TimeUnits units_changed )
 {
+	/*
 	// Get weather update every 30 minutes
-	if ( tick_time->tm_sec % 10 == 0 )
+	if ( tick_time->tm_sec % 5 == 0 )
 		{
 			// Begin dictionary
 			DictionaryIterator * iter;
@@ -174,6 +259,7 @@ static void tick_handler ( struct tm * tick_time, TimeUnits units_changed )
 			// Send the message!
 			app_message_outbox_send();
 		}
+	*/
 }
 
 static void window_load ( Window * window )
