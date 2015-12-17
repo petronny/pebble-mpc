@@ -11,11 +11,12 @@
 	},
 	"appKeys": {
 		"KEY_STATUS": 0,
-		"KEY_TTILE": 1,
+		"KEY_TITLE": 1,
 		"KEY_AUTHOR": 2,
 		"KEY_CURRENT": 3,
 		"KEY_DURATION": 4,
 		"KEY_VOLUME": 5
+
 	},
 	"resources": {
 		"media": [{
